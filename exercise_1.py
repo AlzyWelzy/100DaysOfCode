@@ -15,16 +15,16 @@ while True:
         continue
 
     if userChoice == "add":
-        result = int(num_1) + int(num_2)
+        result = float(num_1) + float(num_2)
 
     if userChoice == "subtract":
-        result = int(num_1) - int(num_2)
+        result = float(num_1) - float(num_2)
 
     if userChoice == "multiply":
-        result = int(num_1) * int(num_2)
+        result = float(num_1) * float(num_2)
 
     if userChoice == "divide":
-        result = int(num_1) / int(num_2)
+        result = float(num_1) / float(num_2)
 
     print("Result for " + userChoice + " is " + str(result))
 
