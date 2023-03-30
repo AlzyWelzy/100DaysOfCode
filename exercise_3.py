@@ -27,6 +27,7 @@ print(
 )
 
 for i in range(len(all_questions)):
+    print("Current wins: {} crore rupees.".format(wins)
     print(all_questions[i])
     all_answers = input("Enter your answer: ")
     if all_answers == all_ans[i]:
