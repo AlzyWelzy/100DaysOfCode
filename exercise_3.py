@@ -12,7 +12,11 @@ qna = {
     "What is the capital of Sri Lanka?": "Colombo",
 }
 
-ans = ["Delhi", "Islamabad", "Beijing", "Kathmandu", "Dhaka", "Colombo"]
+all_questions = [_ for _ in qna.keys()]
+
+all_ans = [_ for _ in qna.values()]
+
+
 all_answers = ""
 
 wins = 0
@@ -22,31 +26,12 @@ print(
     "Each wins will give you 1 crore rupees and giving any wrong answer will end the game and you will get 0 rupees."
 )
 
-for i, j in enumerate(ans):
-    all_answers += f"{i+1}. {j}\n"
-
-for question, answer in qna.items():
-    print("--------------------------------------------------")
-    # run clear command for linux and windows using sys
-    if sys.platform == "win32":
-        os.system("cls")
-    else:
-        os.system("clear")
-    print(f"Current wins: {wins} crore rupees")
-
-    user_answer = input(f"{question}\n{all_answers}")
-
-    if user_answer.lower() == answer.lower():
-        print("Correct Answer")
+for i in range(len(all_questions)):
+    print(all_questions[i])
+    all_answers = input("Enter your answer: ")
+    if all_answers == all_ans[i]:
         wins += 1
+        print("You are right. You won {} crore rupees.".format(wins))
     else:
-        print("Wrong Answer")
-        print("Game Over")
-        print("Better luck next time")
-        wins = 0
-        break
-
-if wins == 0:
-    print("You won 0 rupees")
-else:
-    print(f"You won {wins} crore rupees")
+        print("You are wrong. You won 0 crore rupees.")
+        sys.exit()
