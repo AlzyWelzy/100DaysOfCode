@@ -11,5 +11,7 @@ elif hour >= 12 and hour < 18:
     print("Good afternoon!")
 elif hour >= 18 and hour < 24:
     print("Good evening!")
+else:
+    print("Invalid time!")
 
 print("The current time is " + t)
