@@ -1,14 +1,15 @@
 import time
 
-timestamp = time.strftime("%H:%M:%S")
-print(timestamp)
+t = time.strftime("%H:%M:%S")
+hour = int(t.strftime("%H"))
 
-if timestamp < "12:00:00":
+print(hour)
+
+if hour >= 0 and hour < 12:
     print("Good morning!")
-elif timestamp < "17:00:00":
+elif hour >= 12 and hour < 18:
     print("Good afternoon!")
-elif timestamp < "21:00:00":
+elif hour >= 18 and hour < 24:
     print("Good evening!")
-else:
-    print("Good night!")
 
+print("The current time is " + t)
