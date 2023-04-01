@@ -1,5 +1,17 @@
 import string
 import random
+import os
+
+N = 3
+
+
+def lines(l="="):
+    if l == "=":
+        print("=" * 80)
+    elif l == "-":
+        print("-" * 80)
+    else:
+        print("Invalid line type")
 
 
 def randChar():
@@ -7,20 +19,23 @@ def randChar():
     return "".join(random.choice(string.ascii_letters) for _ in range(3))
 
 
-def encode(str):
-    if len(str) >= 3:
+def encode():
+    str = input("Enter a string to encode: ")
+    if len(str) >= N:
         str = randChar() + str[1:] + str[0] + randChar()
     return str[::-1]
 
 
 def decode(str):
-    if len(str) >= 3:
+    if len(str) >= N:
         str = str[4:-3] + str[3]
     return str[::-1]
 
 
-encod = "Hello, I'm AlzyWelzy!"
+userInp = encode()
 
-print(encode(encod))
+print("Encoded string: " + userInp)
 
-print(decode(encode(encod)))
+decInp = decode(userInp)
+
+print("Decoded string: " + decInp)
