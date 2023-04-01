@@ -15,14 +15,11 @@ def encode(str):
 
 def decode(str):
     if len(str) >= 3:
-        str = str[::-1]
-        str = str[-4] + str[3:-4]
-        return str
-    else:
-        return str[::-1]
+        str = str[4:-3] + str[3]
+    return str[::-1]
 
 
-encod = "He"
+encod = "Hello, I'm AlzyWelzy!"
 
 print(encode(encod))
 
