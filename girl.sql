@@ -31,3 +31,5 @@ where gender = 'girl'
   and is_trustworthy = true
   and has_stable_income = true
   and has_shared_values = true
+  and is_fairly_attractive = true
+  and is_fairly_white = true
