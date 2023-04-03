@@ -9,5 +9,6 @@ for i in range(0, 100):
         f.write("Hello World!")
 
     # os.mkdir(f"data/day_{i+1}")
+    # os.rename(f"data/file_{i+1}.txt", f"data/day_{i+1}/file_{i+1}.txt")
     with open(f"data/day_{i+1}/main.py", "w") as f:
         f.write("print('Hello World!')")
