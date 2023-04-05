@@ -6,8 +6,12 @@ with open("file.txt", "w") as f:
 with open("file.txt", "r") as f:
     print(type(f))
 
+    print(f.tell())
+
     print(f.read())
 
     f.seek(4)
+
+    print(f.tell())
 
     print(f.read())
