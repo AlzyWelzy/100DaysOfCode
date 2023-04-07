@@ -4,22 +4,35 @@ class Library:
         self.__issuedBooks = []
         self.updateIssuedBooks()
 
+    def updateBooks(self):
+        with open("issuedBooks.txt", "w") as f:
+            for book in self.__issuedBooks:
+                f.write(f"{book},")
+
     def updateIssuedBooks(self, book="", i=0):
         if i == -1:
-            with open("issuedBooks.txt", "a") as f:
-                f.write(f"{book},")
-                self.__issuedBooks.append(book)
+            self.__issuedBooks.append(book)
+            self.updateBooks()
+        elif i == 1:
+            self.__issuedBooks.remove(book)
+            self.updateBooks()
+
         else:
             with open("issuedBooks.txt", "r") as f:
                 line = f.readline().rstrip()
                 books = line.split(",")[:-1]
                 self.__issuedBooks = books
 
+        for book in self.__issuedBooks:
+            if book in self.__books:
+                self.__books.remove(book)
+
     def displayIssuedBooks(self):
         print(f"Value of __issuedBooks attribute: {self.__issuedBooks}")
         if self.__issuedBooks:
             print("Issued Books: ")
-            print(self.__issuedBooks)
+            for i, book in enumerate(self.__issuedBooks):
+                print(f"{i}. {book}")
         else:
             print("No books have been issued yet.")
 
@@ -42,6 +55,7 @@ class Library:
 
     def addBook(self, returnedBook):
         self.__books.append(returnedBook)
+        self.updateIssuedBooks(returnedBook, 1)
         print("You have returned the book. Thank you!")
 
 
