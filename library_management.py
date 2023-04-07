@@ -61,12 +61,21 @@ class Library:
 
 class Customer:
     def requestBook(self):
-        self.__book = input("Enter the name of a book you would like to borrow: ")
-        return self.__book
+        try:
+            self.__book = input("Enter the name of a book you would like to borrow: ")
+        except Exception as e:
+            print("Please enter a valid book name")
+            self.requestBook()
+        else:
+            return self.__book
 
     def returnBook(self):
-        self.__book = input("Enter the name of the book which you are returning: ")
-        return self.__book
+        try:
+            self.__book = input("Enter the name of the book which you are returning: ")
+        except Exception as e:
+            print("Please enter a valid book name")
+        else:
+            return self.__book
 
 
 def main():
@@ -86,17 +95,25 @@ def main():
         5. Exit
         """
         )
-        choice = int(input("Enter Choice: "))
-        if choice == 1:
-            library.displayAvailableBooks()
-        elif choice == 2:
-            library.lendBook(customer.requestBook())
-        elif choice == 3:
-            library.addBook(customer.returnBook())
-        elif choice == 4:
-            library.displayIssuedBooks()
-        elif choice == 5:
-            done = True
+        try:
+            choice = int(input("Enter Choice: "))
+        except Exception as e:
+            print("Please enter a valid choice")
+        else:
+            if choice == 1:
+                library.displayAvailableBooks()
+            elif choice == 2:
+                library.lendBook(customer.requestBook())
+            elif choice == 3:
+                library.addBook(customer.returnBook())
+            elif choice == 4:
+                library.displayIssuedBooks()
+            elif choice == 5:
+                done = True
+            else:
+                print("Invalid Choice")
+    else:
+        print("Thank you for using our library")
 
 
 if __name__ == "__main__":
