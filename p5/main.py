@@ -61,8 +61,15 @@ class Organize:
 
     def move_files(self, file_names, destination_path):
         for file in file_names:
-            new_path = destination_path + "/"
-            shutil.move(file, new_path)
+            try:
+                new_path = destination_path + "/"
+                shutil.move(file, new_path)
+            except Exception as e:
+                print(f"Error: {e}")
+            else:
+                print(f"Moved {file} to {new_path}")
+            finally:
+                print("Done.")
 
     def organize(self):
         files = os.listdir()
