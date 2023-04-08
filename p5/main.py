@@ -111,5 +111,10 @@ class Organize:
         self.move_files(others, "others")
 
 
-organizer = Organize()
-organizer.organize()
+def main():
+    organize = Organize()
+    organize.organize()
+
+
+if __name__ == "__main__":
+    main()
