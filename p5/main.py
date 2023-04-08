@@ -19,7 +19,6 @@ def createDir(par):
 
 files = os.listdir()
 
-
 files.remove("practice-5.py")
 files.remove("extensions_by_type.json")
 
@@ -36,7 +35,6 @@ createDir("others")
 
 with open("extensions_by_type.json") as f:
     data = json.load(f)
-
 
 othExt = []
 
@@ -62,7 +60,6 @@ for i in othExt:
     otherExts.append(lowercase_docs)
 otherExts = sum(otherExts, [])
 
-
 images = [file for file in files if os.path.splitext(file)[1].lower() in imgExts]
 
 print(images)
@@ -79,7 +76,6 @@ auds = [file for file in files if os.path.splitext(file)[1].lower() in audExts]
 
 print(auds)
 
-
 others = []
 
 for file in files:
@@ -94,7 +90,6 @@ for file in files:
         others.append(file)
 
 print(others)
-
 
 move(images, "images")
 move(docs, "docs")
