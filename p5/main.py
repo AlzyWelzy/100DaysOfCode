@@ -4,9 +4,8 @@ import pathlib
 import json
 
 
-class FileOrganizer:
-    def __init__(self, source_path="."):
-        self.source_path = pathlib.Path(source_path)
+class Organize:
+    def __init__(self):
         self.not_to_move = [
             "main.py",
             "problem-5.py",
@@ -17,25 +16,41 @@ class FileOrganizer:
             "practice-5-oop.py",
             "extensions_by_type.json",
         ]
-        self.extensions_by_type = self.load_extensions_by_type()
-        self.extensions = self.get_extensions()
 
-    def load_extensions_by_type(self):
-        with open("extensions_by_type.json") as f:
-            return json.load(f)
+        self.create_dir = [
+            "images",
+            "docs",
+            "audios",
+            "videos",
+            "others",
+        ]
 
-    def get_extensions(self):
-        extensions = {
-            "Text": self.extensions_by_type.get("Text", []),
-            "Raster image": self.extensions_by_type.get("Raster image", []),
-            "Video": self.extensions_by_type.get("Video", []),
-            "Audio": self.extensions_by_type.get("Audio", []),
-            "Other": [],
-        }
-        for ext in self.extensions_by_type.keys():
-            if ext not in extensions:
-                extensions["Other"].extend(self.extensions_by_type[ext])
-        return extensions
+        self.data_path = pathlib.Path("extensions_by_type.json")
+        with self.data_path.open() as f:
+            self.data = json.load(f)
+
+        self.docExts = [ext.lower() for ext in self.data.get("Text")]
+        self.imgExts = [ext.lower() for ext in self.data.get("Raster image")]
+        self.vidExts = [ext.lower() for ext in self.data.get("Video")]
+        self.audExts = [ext.lower() for ext in self.data.get("Audio")]
+
+        self.otherExts = sum(
+            [
+                [
+                    e.lower()
+                    for e in self.data[ext]
+                    if ext
+                    not in [
+                        "Text",
+                        "Raster image",
+                        "Video",
+                        "Audio",
+                    ]
+                ]
+                for ext in self.data.keys()
+            ],
+            [],
+        )
 
     def create_directory(self, directory):
         if not os.path.exists(directory):
@@ -56,33 +71,49 @@ class FileOrganizer:
             finally:
                 print("Done.")
 
-    def organize_files(self):
-        files = list(self.source_path.glob("*"))
-        files = [file for file in files if file.name not in self.not_to_move]
-        files_by_extension = {ext: [] for ext in self.extensions.keys()}
-        for file in files:
-            ext = file.suffix.lower()[1:]
-            if ext in self.extensions["Text"]:
-                files_by_extension["Text"].append(file)
-            elif ext in self.extensions["Raster image"]:
-                files_by_extension["Raster image"].append(file)
-            elif ext in self.extensions["Video"]:
-                files_by_extension["Video"].append(file)
-            elif ext in self.extensions["Audio"]:
-                files_by_extension["Audio"].append(file)
-            else:
-                files_by_extension["Other"].append(file)
-        for directory in self.extensions.keys():
-            if not directory:
-                continue
+    def organize(self):
+        files = os.listdir()
+
+        for file in self.not_to_move:
+            files.remove(file)
+
+        for directory in self.create_dir:
             self.create_directory(directory)
-            destination_path = self.source_path / directory
-            self.move_files(files_by_extension[directory], str(destination_path))
+
+        images = [
+            file for file in files if os.path.splitext(file)[1].lower() in self.imgExts
+        ]
+
+        docs = [
+            file for file in files if os.path.splitext(file)[1].lower() in self.docExts
+        ]
+
+        vids = [
+            file for file in files if os.path.splitext(file)[1].lower() in self.vidExts
+        ]
+
+        auds = [
+            file for file in files if os.path.splitext(file)[1].lower() in self.audExts
+        ]
+
+        others = [
+            file
+            for file in files
+            if os.path.splitext(file)[1].lower()
+            not in (self.vidExts + self.audExts + self.docExts + self.imgExts)
+            and os.path.isfile(file)
+        ]
+
+        self.move_files(images, "images")
+        self.move_files(docs, "docs")
+        self.move_files(vids, "videos")
+        self.move_files(auds, "audios")
+        self.move_files(others, "others")
 
 
 def main():
-    organizer = FileOrganizer()
-    organizer.organize_files()
+    organize = Organize()
+    organize.organize()
 
 
 if __name__ == "__main__":
