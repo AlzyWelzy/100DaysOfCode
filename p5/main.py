@@ -8,6 +8,8 @@ class Organize:
     def __init__(self):
         self.not_to_move = [
             "main.py",
+            "main-2.py",
+            "main-3.py",
             "problem-5.py",
             "problem-5-fp.py",
             "problem-5-oop.py",
