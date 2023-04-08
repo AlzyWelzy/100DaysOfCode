@@ -2,6 +2,7 @@ import os
 import json
 import shutil
 
+
 class FileOrganizer:
     def __init__(self):
         with open("extensions_by_type.json") as f:
@@ -14,16 +15,22 @@ class FileOrganizer:
 
         self.otherExts = []
         for ext in self.data.keys():
-            if not (ext == "Text" or ext == "Raster image" or ext == "Video" or ext == "Audio"):
+            if not (
+                ext == "Text"
+                or ext == "Raster image"
+                or ext == "Video"
+                or ext == "Audio"
+            ):
                 lowercase_exts = [e.lower() for e in self.data[ext]]
                 self.otherExts.append(lowercase_exts)
         self.otherExts = sum(self.otherExts, [])
 
+        # self.otherExts = sum([ [e.lower() for e in self.data[ext] if ext not in ["Text", "Raster image", "Video", "Audio"]] for ext in self.data.keys()], [])
+
     def create_directory(self, directory):
         if not os.path.exists(directory):
             os.makedirs(directory)
-            print(
-                f"Directory {directory} doesn't exist, so it has been created.")
+            print(f"Directory {directory} doesn't exist, so it has been created.")
         else:
             print(f"Directory {directory} already exists.")
 
@@ -43,19 +50,29 @@ class FileOrganizer:
         self.create_directory("videos")
         self.create_directory("others")
 
-        images = [file for file in files if os.path.splitext(
-            file)[1].lower() in self.imgExts]
-        docs = [file for file in files if os.path.splitext(
-            file)[1].lower() in self.docExts]
-        vids = [file for file in files if os.path.splitext(
-            file)[1].lower() in self.vidExts]
-        auds = [file for file in files if os.path.splitext(
-            file)[1].lower() in self.audExts]
+        images = [
+            file for file in files if os.path.splitext(file)[1].lower() in self.imgExts
+        ]
+        docs = [
+            file for file in files if os.path.splitext(file)[1].lower() in self.docExts
+        ]
+        vids = [
+            file for file in files if os.path.splitext(file)[1].lower() in self.vidExts
+        ]
+        auds = [
+            file for file in files if os.path.splitext(file)[1].lower() in self.audExts
+        ]
 
         others = []
         for file in files:
             ext = os.path.splitext(file)[1].lower()
-            if (ext not in self.vidExts) and (ext not in self.audExts) and (ext not in self.docExts) and (ext not in self.imgExts) and os.path.isfile(file):
+            if (
+                (ext not in self.vidExts)
+                and (ext not in self.audExts)
+                and (ext not in self.docExts)
+                and (ext not in self.imgExts)
+                and os.path.isfile(file)
+            ):
                 others.append(file)
 
         self.move_files(images, "images")
@@ -63,6 +80,7 @@ class FileOrganizer:
         self.move_files(vids, "videos")
         self.move_files(auds, "audios")
         self.move_files(others, "others")
+
 
 organizer = FileOrganizer()
 organizer.organize()
