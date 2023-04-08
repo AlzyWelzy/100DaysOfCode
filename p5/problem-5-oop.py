@@ -63,17 +63,27 @@ class FileOrganizer:
             file for file in files if os.path.splitext(file)[1].lower() in self.audExts
         ]
 
-        others = []
-        for file in files:
-            ext = os.path.splitext(file)[1].lower()
+        # others = []
+        # for file in files:
+        #     ext = os.path.splitext(file)[1].lower()
+        #     if (
+        #         (ext not in self.vidExts)
+        #         and (ext not in self.audExts)
+        #         and (ext not in self.docExts)
+        #         and (ext not in self.imgExts)
+        #         and os.path.isfile(file)
+        #     ):
+        #         others.append(file)
+
+        others = [
+            file
+            for file in files
             if (
-                (ext not in self.vidExts)
-                and (ext not in self.audExts)
-                and (ext not in self.docExts)
-                and (ext not in self.imgExts)
-                and os.path.isfile(file)
-            ):
-                others.append(file)
+                os.path.splitext(file)[1].lower()
+                not in self.vidExts + self.audExts + self.docExts + self.imgExts
+            )
+            and os.path.isfile(file)
+        ]
 
         self.move_files(images, "images")
         self.move_files(docs, "docs")
