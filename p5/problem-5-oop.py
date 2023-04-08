@@ -13,6 +13,13 @@ class FileOrganizer:
         self.vidExts = [ext.lower() for ext in self.data.get("Video")]
         self.audExts = [ext.lower() for ext in self.data.get("Audio")]
 
+        # self.otherExts = []
+        # for ext in self.data.keys():
+        #     if not (ext == "Text" or ext == "Raster image" or ext == "Video" or ext == "Audio"):
+        #         lowercase_exts = [e.lower() for e in self.data[ext]]
+        #         self.otherExts.append(lowercase_exts)
+        # self.otherExts = sum(self.otherExts, [])
+
         self.otherExts = sum(
             [
                 [
@@ -60,6 +67,18 @@ class FileOrganizer:
         auds = [
             file for file in files if os.path.splitext(file)[1].lower() in self.audExts
         ]
+
+        # others = []
+        # for file in files:
+        #     ext = os.path.splitext(file)[1].lower()
+        #     if (
+        #         (ext not in self.vidExts)
+        #         and (ext not in self.audExts)
+        #         and (ext not in self.docExts)
+        #         and (ext not in self.imgExts)
+        #         and os.path.isfile(file)
+        #     ):
+        #         others.append(file)
 
         others = [
             file
