@@ -1,3 +1,3 @@
-food = list()
+foods = list()
 while (food := input("What is your favorite food? ")) != "":
-    food.append(food)
+    foods.append(food)
