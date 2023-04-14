@@ -2,6 +2,7 @@ import gtts
 from playsound import playsound
 import os
 
+
 # make request to google to get synthesis
 # tts = gtts.gTTS("za warudo toki wo tomare", lang="ja")
 # tts = gtts.gTTS("za warudo toki wo tomare", lang="ja", slow=False)
@@ -38,7 +39,15 @@ for name in names:
     tts = gtts.gTTS(f"Shoutout to {name}", lang="en")
     tts.save(f"shoutout_{name}.mp3")
 
-    # playsound(f"shoutout_{name}.mp3")
+tts = gtts.gTTS(
+    "Tume milega shoutout bro, mast hai ki nahi to " + ", ".join(names), lang="en"
+)
+
+tts.save("tume.mp3")
+
+playsound("tume.mp3")
+
+# playsound(f"shoutout_{name}.mp3")
 
 all = os.listdir()
 
